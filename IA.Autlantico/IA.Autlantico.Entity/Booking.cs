@@ -15,6 +15,12 @@ namespace IA.Autlantico.Entity
             this.IdHosting = IdHosting;
             this.DeletedAt = DeletedAt;
         }
+        public Booking(DateTime CheckInDate, int IdAnimal, int IdHosting)
+        {
+            this.CheckInDate = CheckInDate;
+            this.IdAnimal = IdAnimal;
+            this.IdHosting = IdHosting;
+        }
 
         public int Id { get; set; }
         public DateTime CheckInDate { get; set; }

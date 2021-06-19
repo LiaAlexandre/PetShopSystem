@@ -43,8 +43,9 @@ namespace IA.Autlantico.Repository
             }
         }
 
-        public void Save (Tutor tutor)
+        public int Save (Tutor tutor)
         {
+            int idTutor = 0;
             try
             {
                 string query = @"INSERT INTO [dbo].[tbTutor]
@@ -54,7 +55,8 @@ namespace IA.Autlantico.Repository
                                      VALUES
                                            (@Name
                                            ,@Adress
-                                           ,@PhoneNumber)";
+                                           ,@PhoneNumber)
+                                     SELECT SCOPE_IDENTITY()";
 
                 using (var connection = new SqlConnection(connectionstring))
                 {
@@ -65,8 +67,10 @@ namespace IA.Autlantico.Repository
                     parameters.Add("@Adress", tutor.Adress);
                     parameters.Add("@PhoneNumber", tutor.PhoneNumber);
 
-                    connection.Execute(query, parameters);
+                    idTutor = connection.Execute(query, parameters);
                 }
+
+                return idTutor;
             }
             catch
             {
@@ -100,6 +104,31 @@ namespace IA.Autlantico.Repository
             catch
             {
                 throw new Exception("Erro ao editar tutor.");
+            }
+        }
+
+        public void Delete(int id)
+        {
+            try
+            {
+                string query = @"UPDATE [dbo].[tbTutor]
+                                 SET [DeletedAt] = @DeletedAt
+                                 WHERE Id = @Id";
+
+                using (var connection = new SqlConnection(connectionstring))
+                {
+                    connection.Open();
+
+                    var parameters = new DynamicParameters();
+                    parameters.Add("@DeletedAt", DateTime.Now);
+                    parameters.Add("@Id", id);
+
+                    connection.Execute(query, parameters);
+                }
+            }
+            catch
+            {
+                throw new Exception("Erro ao excluir tutor.");
             }
         }
     }

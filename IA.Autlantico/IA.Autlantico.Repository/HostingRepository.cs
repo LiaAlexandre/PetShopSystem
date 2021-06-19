@@ -69,14 +69,41 @@ namespace IA.Autlantico.Repository
             }
         }
 
-        public void Update(Hosting hosting)
+        public Hosting GetEmpty()
+        {
+            try
+            {
+                Hosting hosting = null;
+
+                string query = @"SELECT [Id]
+                                       ,[Status]
+                                       ,[DeletedAt]
+                                  FROM [dbo].[tbHosting]
+                                  WHERE [Status] = 0 AND [DeletedAt] IS NULL";
+
+                using (var connection = new SqlConnection(connectionstring))
+                {
+                    connection.Open();
+
+                    hosting = connection.QuerySingleOrDefault<Hosting>(query);
+                }
+
+                return hosting;
+            }
+            catch
+            {
+                throw new Exception("Erro ao buscar alojamento.");
+            }
+        }
+
+        public void Update(int id, bool status)
         {
             try
             {
                 string query = null;
 
                 //atualiza para ocupado
-                if(hosting.Status == false)
+                if(status == true)
                 {
                     query = @"UPDATE [dbo].[tbHosting]
                                  SET [Status] = 1
@@ -96,7 +123,7 @@ namespace IA.Autlantico.Repository
                     connection.Open();
 
                     var parameters = new DynamicParameters();
-                    parameters.Add("@Id", hosting.Id);
+                    parameters.Add("@Id", id);
 
                     connection.QuerySingleOrDefault<Hosting>(query);
                 }

@@ -108,8 +108,9 @@ namespace IA.Autlantico.Repository
             }
         }
 
-        public void Save(Animal animal)
+        public int Save(Animal animal)
         {
+            int idAnimal = 0;
             try
             {
                 string query = @"INSERT INTO [dbo].[tbAnimal]
@@ -121,7 +122,8 @@ namespace IA.Autlantico.Repository
                                            (@Name
                                            ,@InternationMotive
                                            ,@Status
-                                           ,@IdTutor)";
+                                           ,@IdTutor)
+                                    SELECT SCOPE_IDENTITY()";
 
                 using (var connection = new SqlConnection(connectionstring))
                 {
@@ -133,8 +135,9 @@ namespace IA.Autlantico.Repository
                     parameters.Add("@Status", animal.Status);
                     parameters.Add("@IdTutor", animal.IdTutor);
 
-                    connection.Execute(query, parameters);
+                    idAnimal = connection.Execute(query, parameters);
                 }
+                return idAnimal;
             }
             catch
             {

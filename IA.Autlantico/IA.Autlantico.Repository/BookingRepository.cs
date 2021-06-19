@@ -74,6 +74,40 @@ namespace IA.Autlantico.Repository
             }
         }
 
+        public Booking GetByAnimalId(int idAnimal)
+        {
+            try
+            {
+                Booking booking = null;
+
+                string query = @"SELECT [Id]
+                                       ,[CheckInDate]
+                                       ,[CheckOutDate]
+                                       ,[IdAnimal]
+                                       ,[IdHosting]
+                                       ,[DeletedAt]
+                                   FROM [dbo].[tbBooking]
+                                  WHERE [IdAnimal] = @IdAnimal AND [CheckOutDate] IS NULL
+                                  AND [DeletedAt] IS NULL";
+
+                using (var connection = new SqlConnection(connectionstring))
+                {
+                    connection.Open();
+
+                    var parameters = new DynamicParameters();
+                    parameters.Add("@Id", idAnimal);
+
+                    booking = connection.QuerySingleOrDefault<Booking>(query);
+                }
+
+                return booking;
+            }
+            catch
+            {
+                throw new Exception("Erro ao buscar reserva.");
+            }
+        }
+
         public void Save(Booking booking)
         {
             try
@@ -130,7 +164,7 @@ namespace IA.Autlantico.Repository
             }
         }
 
-        public void CheckOut(Booking booking)
+        public void CheckOut(int id, DateTime checkOut)
         {
             try
             {
@@ -143,8 +177,8 @@ namespace IA.Autlantico.Repository
                     connection.Open();
 
                     var parameters = new DynamicParameters();
-                    parameters.Add("@CheckOutDate", booking.CheckOutDate);
-                    parameters.Add("@Id", booking.Id);
+                    parameters.Add("@CheckOutDate", id);
+                    parameters.Add("@Id", checkOut);
 
                     connection.Execute(query, parameters);
                 }
