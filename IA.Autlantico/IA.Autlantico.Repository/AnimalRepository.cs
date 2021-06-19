@@ -12,7 +12,7 @@ namespace IA.Autlantico.Repository
     {
         string connectionstring = "Data Source = (LocalDb)\\MSSQLLocalDB;";
 
-        public List<Animal> SelectAll()
+        public List<Animal> GetAll()
         {
             try
             {
@@ -42,7 +42,7 @@ namespace IA.Autlantico.Repository
             }
         }
 
-        public Animal Select(string search)
+        public Animal GetByName(string search)
         {
             try
             {
@@ -75,7 +75,7 @@ namespace IA.Autlantico.Repository
             }
         }
 
-        public Animal Select(int id)
+        public Animal GetById(int id)
         {
             try
             {

@@ -11,7 +11,7 @@ namespace IA.Autlantico.Repository
     {
         string connectionstring = "Data Source = (LocalDb)\\MSSQLLocalDB;";
 
-        public Tutor Select(int id)
+        public Tutor GetById(int id)
         {
             try
             {

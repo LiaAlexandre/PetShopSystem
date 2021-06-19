@@ -12,7 +12,7 @@ namespace IA.Autlantico.Repository
     {
         string connectionstring = "Data Source = (LocalDb)\\MSSQLLocalDB;";
 
-        public List<Booking> SelectAll()
+        public List<Booking> GetAll()
         {
             try
             {
@@ -41,7 +41,7 @@ namespace IA.Autlantico.Repository
             }
         }
 
-        public Booking Select(int id)
+        public Booking GetById(int id)
         {
             try
             {
