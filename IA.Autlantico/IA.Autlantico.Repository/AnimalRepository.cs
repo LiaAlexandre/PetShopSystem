@@ -10,7 +10,7 @@ namespace IA.Autlantico.Repository
 {
     public class AnimalRepository
     {
-        string connectionstring = "Data Source = (LocalDb)\\MSSQLLocalDB;";
+        string connectionstring = "Data Source=LAPTOP-FGQM066T;Initial Catalog=Autlantico;Integrated Security=true;";
 
         public List<Animal> GetAll()
         {
@@ -36,7 +36,7 @@ namespace IA.Autlantico.Repository
 
                 return animals;
             }
-            catch
+            catch(Exception ex)
             {
                 throw new Exception("Erro ao buscar lista de animais.");
             }

@@ -4,4 +4,9 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\IA.Autlantico.Service\IA.Autlantico.Service.csproj" />
+  </ItemGroup>
+
+
 </Project>

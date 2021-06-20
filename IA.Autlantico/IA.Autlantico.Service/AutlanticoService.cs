@@ -88,7 +88,7 @@ namespace IA.Autlantico.Service
             }
             else
             {
-                throw new Exception("Animal não encontra-se internado. Não é possível fazer check-out.")
+                throw new Exception("Animal não encontra-se internado. Não é possível fazer check-out.");
             }
         }
 
