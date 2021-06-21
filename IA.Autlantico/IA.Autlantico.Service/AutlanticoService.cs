@@ -12,8 +12,9 @@ namespace IA.Autlantico.Service
         TutorRepository TutorRepository = new TutorRepository();
         BookingRepository BookingRepository = new BookingRepository();
         HostingRepository HostingRepository = new HostingRepository();
-        public int SaveAnimal(Animal animal, Tutor tutor)
+        public int SaveAnimal(Animal animal)
         {
+            Tutor tutor = new Tutor(animal.NameTutor, animal.Address, animal.PhoneNumber);
             //salva novo tutor
             int idTutor = TutorRepository.Save(tutor);
 
@@ -42,7 +43,7 @@ namespace IA.Autlantico.Service
             return AnimalRepository.GetAll();            
         }
 
-        public Animal GetAnimalBySearch(string search)
+        public List<Animal> GetAnimalBySearch(string search)
         {
             return AnimalRepository.GetByName(search);        
         }

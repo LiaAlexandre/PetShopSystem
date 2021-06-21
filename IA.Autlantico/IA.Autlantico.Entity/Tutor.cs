@@ -10,13 +10,21 @@ namespace IA.Autlantico.Entity
         {
             this.Id = Id;
             this.Name = Name;
-            this.Adress = Adress;
+            this.Address = Adress;
             this.PhoneNumber = PhoneNumber;
             this.DeletedAt = DeletedAt;
         }
+
+        public Tutor(string Name, string Adress, string PhoneNumber)
+        {
+            this.Name = Name;
+            this.Address = Adress;
+            this.PhoneNumber = PhoneNumber;
+        }
+
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Adress { get; set; }
+        public string Address { get; set; }
         public string PhoneNumber { get; set; }
         public DateTime DeletedAt { get; set; }
 

@@ -1,0 +1,26 @@
+
+header {
+  background-color: black;
+  padding: 10px;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .ativo {
+    display: none;
+  }
+}
+a:hover{
+  background-color: white;
+  color: black !important;
+}
+
+main {
+  background-color: #fcfcfc;
+  padding: var(--padding);
+}

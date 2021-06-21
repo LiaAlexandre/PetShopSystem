@@ -32,14 +32,23 @@ namespace IA.Autlantico.API.Controllers
         [HttpGet("{name}")]
         public IEnumerable<Animal> Get(string name)
         {
-            return null;
+            AutlanticoService autlanticoService = new AutlanticoService();
+
+            var getAnimal = autlanticoService.GetAnimalBySearch(name);
+
+            return getAnimal;
         }
 
         // POST api/<AutlanticoController>
         [EnableCors("MyPolicy")]
         [HttpPost]
-        public void Post([FromBody] object animal)
+        public int Post([FromBody] Animal animal)
         {
+            AutlanticoService autlanticoService = new AutlanticoService();
+
+            var hostingId = autlanticoService.SaveAnimal(animal);
+
+            return hostingId;
         }
 
         // PUT api/<AutlanticoController>/5

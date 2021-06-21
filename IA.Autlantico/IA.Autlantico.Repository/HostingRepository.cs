@@ -10,7 +10,7 @@ namespace IA.Autlantico.Repository
 {
     public class HostingRepository
     {
-        string connectionstring = "Data Source = (LocalDb)\\MSSQLLocalDB;";
+        string connectionstring = "Data Source=LAPTOP-FGQM066T;Initial Catalog=Autlantico;Integrated Security=true;";
 
         public List<Hosting> GetAll()
         {
@@ -77,9 +77,8 @@ namespace IA.Autlantico.Repository
 
                 string query = @"SELECT [Id]
                                        ,[Status]
-                                       ,[DeletedAt]
                                   FROM [dbo].[tbHosting]
-                                  WHERE [Status] = 0 AND [DeletedAt] IS NULL";
+                                  WHERE [Status] = 0";
 
                 using (var connection = new SqlConnection(connectionstring))
                 {
@@ -90,7 +89,7 @@ namespace IA.Autlantico.Repository
 
                 return hosting;
             }
-            catch
+            catch(Exception ex)
             {
                 throw new Exception("Erro ao buscar alojamento.");
             }
@@ -125,10 +124,10 @@ namespace IA.Autlantico.Repository
                     var parameters = new DynamicParameters();
                     parameters.Add("@Id", id);
 
-                    connection.QuerySingleOrDefault<Hosting>(query);
+                    connection.QuerySingleOrDefault<Hosting>(query, parameters);
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 throw new Exception("Erro ao atualizar alojamento.");
             }

@@ -1,0 +1,15 @@
+ <section class="container">
+  <h2 class="titulo">Alojamentos</h2>
+  <table class="tabela">
+    <thead class="tabela__cabecalho">
+      <th class="tabela__cabecalho__conteudo">Número</th>
+      <th class="tabela__cabecalho__conteudo">Status</th>
+    </thead>
+    <tbody >
+      <tr class="tabela__linha" *ngFor="let hosting of hostings">
+        <td class="tabela__conteudo">{{ hosting.Id }}</td>
+        <td class="tabela__conteudo">{{ hosting.Status }}</td>
+      </tr>
+    </tbody>
+  </table>
+</section>

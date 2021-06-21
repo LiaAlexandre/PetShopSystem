@@ -21,10 +21,11 @@ export class SaveAnimalComponent implements OnInit {
   title = 'SaveAnimal';
   namePet: string = '';
   internationMotive: string ='';
-  status: number=0;
+  status: string='0';
   nameTutor:string='';
   address: string='';
   phoneNumber:string = '';
+  statusName = undefined;
 
   save(){
 
@@ -32,10 +33,11 @@ export class SaveAnimalComponent implements OnInit {
         {
             Name : this.namePet,
             InternationMotive : this.internationMotive,
-            Status : this.status.toString(),
+            Status : parseInt(this.status),
             NameTutor : this.nameTutor,
             Address : this.address,
-            PhoneNumber : this.phoneNumber
+            PhoneNumber : this.phoneNumber,
+            StatusName : this.statusName
            };
 
     this.service.save(animalToSave).subscribe(result => {

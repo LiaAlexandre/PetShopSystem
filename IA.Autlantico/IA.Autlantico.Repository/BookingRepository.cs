@@ -10,7 +10,7 @@ namespace IA.Autlantico.Repository
 {
     public class BookingRepository
     {
-        string connectionstring = "Data Source = (LocalDb)\\MSSQLLocalDB;";
+        string connectionstring = "Data Source=LAPTOP-FGQM066T;Initial Catalog=Autlantico;Integrated Security=true;";
 
         public List<Booking> GetAll()
         {
@@ -119,7 +119,7 @@ namespace IA.Autlantico.Repository
                                  VALUES
                                            (@CheckInDate
                                            ,@IdAnimal
-                                           ,@Hosting)";
+                                           ,@IdHosting)";
 
                 using (var connection = new SqlConnection(connectionstring))
                 {
@@ -133,7 +133,7 @@ namespace IA.Autlantico.Repository
                     connection.Execute(query, parameters);
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 throw new Exception("Erro ao salvar reserva.");
             }
@@ -183,7 +183,7 @@ namespace IA.Autlantico.Repository
                     connection.Execute(query, parameters);
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 throw new Exception("Erro ao realizar checkout.");
             }

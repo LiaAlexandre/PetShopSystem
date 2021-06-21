@@ -42,12 +42,10 @@ namespace IA.Autlantico.Repository
             }
         }
 
-        public Animal GetByName(string search)
+        public List<Animal> GetByName(string search)
         {
             try
             {
-                Animal animal = null;
-
                 string query = @"SELECT [Id]
                                        ,[Name]
                                        ,[InternationMotive]
@@ -55,21 +53,16 @@ namespace IA.Autlantico.Repository
                                        ,[IdTutor]
                                        ,[DeletedAt]
                                   FROM [dbo].[tbAnimal]
-                                  WHERE UPPER(Name) LIKE ‘@Search%’ AND [DeletedAt] IS NULL";
+                                  WHERE Name LIKE'" + search + "%' AND [DeletedAt] IS NULL";
 
                 using (var connection = new SqlConnection(connectionstring))
                 {
                     connection.Open();
 
-                    var parameters = new DynamicParameters();
-                    parameters.Add("@Search", search);
-
-                    animal = connection.QuerySingleOrDefault<Animal>(query);
+                    return connection.Query<Animal>(query).ToList();
                 }
-
-                return animal;
             }
-            catch
+            catch(Exception ex)
             {
                 throw new Exception("Erro ao buscar animal.");
             }

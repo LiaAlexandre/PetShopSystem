@@ -9,7 +9,7 @@ namespace IA.Autlantico.Repository
 {
     public class TutorRepository
     {
-        string connectionstring = "Data Source = (LocalDb)\\MSSQLLocalDB;";
+        string connectionstring = "Data Source=LAPTOP-FGQM066T;Initial Catalog=Autlantico;Integrated Security=true;";
 
         public Tutor GetById(int id)
         {
@@ -49,12 +49,12 @@ namespace IA.Autlantico.Repository
             try
             {
                 string query = @"INSERT INTO [dbo].[tbTutor]
-                                            ,[Name]
-                                            ,[Adress]
+                                            ([Name]
+                                            ,[Address]
                                             ,[PhoneNumber])
                                      VALUES
                                            (@Name
-                                           ,@Adress
+                                           ,@Address
                                            ,@PhoneNumber)
                                      SELECT SCOPE_IDENTITY()";
 
@@ -64,7 +64,7 @@ namespace IA.Autlantico.Repository
 
                     var parameters = new DynamicParameters();
                     parameters.Add("@Name", tutor.Name);
-                    parameters.Add("@Adress", tutor.Adress);
+                    parameters.Add("@Address", tutor.Address);
                     parameters.Add("@PhoneNumber", tutor.PhoneNumber);
 
                     idTutor = connection.Execute(query, parameters);
@@ -72,7 +72,7 @@ namespace IA.Autlantico.Repository
 
                 return idTutor;
             }
-            catch
+            catch(Exception ex)
             {
                 throw new Exception("Erro ao salvar tutor.");
             }
@@ -94,7 +94,7 @@ namespace IA.Autlantico.Repository
 
                     var parameters = new DynamicParameters();
                     parameters.Add("@Name", tutor.Name);
-                    parameters.Add("@Adress", tutor.Adress);
+                    parameters.Add("@Adress", tutor.Address);
                     parameters.Add("@PhoneNumber", tutor.PhoneNumber);
                     parameters.Add("@Id", tutor.Id);
 

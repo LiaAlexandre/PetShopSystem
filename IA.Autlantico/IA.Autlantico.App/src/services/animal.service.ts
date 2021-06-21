@@ -1,3 +1,4 @@
+import { Hosting } from './../models/hosting.model';
 import { Animal } from './../models/animal.model';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
@@ -46,4 +47,13 @@ constructor(private httpClient: HttpClient) {
         return throwError(error.message);
       }))
     }
+
+    getAllHosting(): Observable<Hosting[]> {
+      return this.httpClient.get<Hosting[]>(this.url).pipe(
+        catchError((error) => {
+          console.log('error is intercept')
+          console.error(error);
+          return throwError(error.message);
+        }))
+      }
 }

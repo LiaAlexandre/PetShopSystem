@@ -6,31 +6,34 @@ namespace IA.Autlantico.Entity
 {
     public class Animal
     {
-
-
-        public Animal(int Id, string Name, string InternationMotive, string Status, int IdTutor)
-        {
-            this.Id = Id;
-            this.Name = Name;
-            this.InternationMotive = InternationMotive;
-            this.Status = Status;
-            this.IdTutor = IdTutor;
-        }
-        public Animal(int Id, string Name, string InternationMotive, string Status, int IdTutor, DateTime DeletedAt)
-        {
-            this.Id = Id;
-            this.Name = Name;
-            this.InternationMotive = InternationMotive;
-            this.Status = Status;
-            this.IdTutor = IdTutor;
-            this.DeletedAt = DeletedAt;
-        }
+        public Animal() { }
 
         public int? Id { get; set; }
         public string Name { get; set; }
         public string InternationMotive { get; set; }
-        public string Status { get; set; }
+        public StatusId? Status { get; set; }
+        public string StatusName { 
+            get 
+            { 
+                if (Status == StatusId.InTreatment) return "Em tratamento";
+
+                if (Status == StatusId.Recovering) return "Se recuperando";
+
+                return "Curado";
+            }
+        }
         public int? IdTutor { get; set; }
+        public string NameTutor { get; set; }
+        public string Address { get; set; }
+        public string PhoneNumber { get; set; }
+        public int? IdHosting { get; set; }
         public DateTime? DeletedAt { get; set; }
+
+        public enum StatusId
+        {
+            InTreatment = 0,
+            Recovering = 1,
+            Healed = 2
+        }
     }
 }
