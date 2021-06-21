@@ -23,6 +23,7 @@ namespace IA.Autlantico.Repository
                                        ,[InternationMotive]
                                        ,[Status]
                                        ,[IdTutor]
+                                       ,[IdHosting]
                                        ,[DeletedAt]
                                   FROM [dbo].[tbAnimal]
                                   WHERE [DeletedAt] IS NULL";
@@ -51,6 +52,7 @@ namespace IA.Autlantico.Repository
                                        ,[InternationMotive]
                                        ,[Status]
                                        ,[IdTutor]
+                                       ,[IdHosting]
                                        ,[DeletedAt]
                                   FROM [dbo].[tbAnimal]
                                   WHERE Name LIKE'" + search + "%' AND [DeletedAt] IS NULL";
@@ -79,6 +81,7 @@ namespace IA.Autlantico.Repository
                                        ,[InternationMotive]
                                        ,[Status]
                                        ,[IdTutor]
+                                       ,[IdHosting]
                                        ,[DeletedAt]
                                   FROM [dbo].[tbAnimal]
                                   WHERE [Id] = @Id AND [DeletedAt] IS NULL";
@@ -110,12 +113,14 @@ namespace IA.Autlantico.Repository
                                            ([Name]
                                            ,[InternationMotive]
                                            ,[Status]
-                                           ,[IdTutor])
+                                           ,[IdTutor]
+                                           ,[IdHosting])
                                      VALUES
                                            (@Name
                                            ,@InternationMotive
                                            ,@Status
-                                           ,@IdTutor)
+                                           ,@IdTutor
+                                           ,@IdHosting)
                                     SELECT SCOPE_IDENTITY()";
 
                 using (var connection = new SqlConnection(connectionstring))
@@ -127,6 +132,7 @@ namespace IA.Autlantico.Repository
                     parameters.Add("@InternationMotive", animal.InternationMotive);
                     parameters.Add("@Status", animal.Status);
                     parameters.Add("@IdTutor", animal.IdTutor);
+                    parameters.Add("@IdHosting", animal.IdHosting);
 
                     idAnimal = connection.Execute(query, parameters);
                 }
@@ -146,6 +152,7 @@ namespace IA.Autlantico.Repository
                                     SET [Name] = @Name
                                         ,[InternationMotive] = @InternationMotive
                                         ,[Status] = @Status
+                                        ,[IdHosting] = @IdHosting
                                 WHERE Id = @Id";
 
                 using (var connection = new SqlConnection(connectionstring))
@@ -157,6 +164,7 @@ namespace IA.Autlantico.Repository
                     parameters.Add("@InternationMotive", animal.InternationMotive);
                     parameters.Add("@Status", animal.Status);
                     parameters.Add("@Id", animal.Id);
+                    parameters.Add("@IdHosting", animal.IdHosting);
 
                     connection.Execute(query, parameters);
                 }
@@ -173,6 +181,7 @@ namespace IA.Autlantico.Repository
             {
                 string query = @"UPDATE [dbo].[tbAnimal]
                                  SET [DeletedAt] = @DeletedAt
+                                    ,[IdHosting] = null
                                  WHERE Id = @Id";
 
                 using (var connection = new SqlConnection(connectionstring))

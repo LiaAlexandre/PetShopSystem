@@ -13,5 +13,15 @@ namespace IA.Autlantico.Entity
         }
         public int Id { get; set; }
         public bool Status { get; set; }
+
+        public string StatusName
+        {
+            get
+            {
+                if (Status == true) return "Ocupado";                
+
+                return "Livre";
+            }
+        }
     }
 }

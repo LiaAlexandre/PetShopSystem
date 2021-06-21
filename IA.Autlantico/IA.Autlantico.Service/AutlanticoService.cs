@@ -3,6 +3,7 @@ using IA.Autlantico.Repository;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Transactions;
 
 namespace IA.Autlantico.Service
 {
@@ -10,32 +11,32 @@ namespace IA.Autlantico.Service
     {
         AnimalRepository AnimalRepository = new AnimalRepository();
         TutorRepository TutorRepository = new TutorRepository();
-        BookingRepository BookingRepository = new BookingRepository();
         HostingRepository HostingRepository = new HostingRepository();
         public int SaveAnimal(Animal animal)
         {
-            Tutor tutor = new Tutor(animal.NameTutor, animal.Address, animal.PhoneNumber);
-            //salva novo tutor
-            int idTutor = TutorRepository.Save(tutor);
+            using (TransactionScope scope = new TransactionScope())
+            {
+                //busca um alojamento vazio
+                var emptyHosting = HostingRepository.GetEmpty();
 
-            animal.IdTutor = idTutor;
+                //atualiza o alojamento para ocupado
+                HostingRepository.Update(emptyHosting.Id, true);
 
-            //salva novo animal
-            int idAnimal = AnimalRepository.Save(animal);
+                //salva novo tutor
+                Tutor tutor = new Tutor(animal.NameTutor, animal.Address, animal.PhoneNumber);
+                int idTutor = TutorRepository.Save(tutor);
 
-            //busca um alojamento vazio
-            var emptyHosting = HostingRepository.GetEmpty();
+                animal.IdTutor = idTutor;
+                animal.IdHosting = emptyHosting.Id;
 
-            //monta o obj reserva
-            var booking = new Booking(DateTime.Now, idAnimal, emptyHosting.Id);
+                //salva novo animal
+                int idAnimal = AnimalRepository.Save(animal);
 
-            //salva nova reserva
-            BookingRepository.Save(booking);
+                scope.Complete();
 
-            //atualiza o alojamento para ocupado
-            HostingRepository.Update(emptyHosting.Id, true);
-
-            return emptyHosting.Id;
+                return emptyHosting.Id;
+            }
+         
         }
 
         public List<Animal> GetAnimals()
@@ -53,9 +54,10 @@ namespace IA.Autlantico.Service
             return AnimalRepository.GetById(id);
         }
 
-        public void UpdateAnimal(Animal animal, Tutor tutor)
+        public void UpdateAnimal(Animal animal)
         {
             //atualiza informações do tutor
+            Tutor tutor = new Tutor(animal.NameTutor, animal.Address, animal.PhoneNumber);
             TutorRepository.Update(tutor);
 
             //atualiza informações do animal
@@ -64,28 +66,25 @@ namespace IA.Autlantico.Service
 
         public void DeleteAnimal(int id)
         {
+            var animal = AnimalRepository.GetById(id);
+
             AnimalRepository.Delete(id);
 
             TutorRepository.Delete(id);
 
-            var bookingDetails = BookingRepository.GetByAnimalId(id);
+            HostingRepository.Update((int)animal.IdHosting, false);
 
-            if(bookingDetails != null)
-            {
-                BookingRepository.Delete(bookingDetails.Id);
-                HostingRepository.Update(bookingDetails.IdHosting, false);
-            }
         }
 
         public void CheckOutAnimal(int idAnimal)
         {
-            var booking = BookingRepository.GetByAnimalId(idAnimal);
+            var animal = AnimalRepository.GetById(idAnimal);
 
-            if(booking != null)
+            if (animal.IdHosting != null)
             {
-                BookingRepository.CheckOut(booking.Id, DateTime.Now);
-
-                HostingRepository.Update(booking.IdHosting, false);
+                animal.IdHosting = null;
+                AnimalRepository.Update(animal);
+                HostingRepository.Update((int)animal.IdHosting, false);
             }
             else
             {
@@ -101,44 +100,6 @@ namespace IA.Autlantico.Service
         public Hosting GetHosting(int id)
         {
             return HostingRepository.GetById(id);
-        }
-
-        public int NewBooking(int idAnimal)
-        {
-            var animal = AnimalRepository.GetById(idAnimal);
-
-            Hosting hosting = null;
-
-            if(animal != null)
-            {
-                var booking = BookingRepository.GetByAnimalId(idAnimal);
-
-                if(booking == null)
-                {
-                    hosting = HostingRepository.GetEmpty();
-
-                    if(hosting != null)
-                    {
-                        var newBooking = new Booking(DateTime.Now, idAnimal, hosting.Id);
-                        BookingRepository.Save(newBooking);
-
-                        HostingRepository.Update(hosting.Id, true);
-                    }
-                    else
-                    {
-                        throw new Exception("Não há alojamentos vagos no momento.");
-                    }
-                }
-                else
-                {
-                    throw new Exception("Animal já encontra-se internado.");
-                }
-            }
-            else
-            {
-                throw new Exception("Animal não encontrado.");
-            }
-            return hosting.Id;
-        }
+        }      
     }
 }

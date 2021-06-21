@@ -51,16 +51,34 @@ namespace IA.Autlantico.API.Controllers
             return hostingId;
         }
 
+        [EnableCors("MyPolicy")]
+        [Route("GetHostings")]
+        [HttpGet]
+        public IEnumerable<Hosting> GetHostings()
+        {
+            AutlanticoService autlanticoService = new AutlanticoService();
+
+            var getHostings = autlanticoService.GetHostingList();
+
+            return getHostings;
+        }
+
         // PUT api/<AutlanticoController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public void Put(int id, [FromBody] Animal animal)
         {
+            AutlanticoService autlanticoService = new AutlanticoService();
+
+            autlanticoService.UpdateAnimal(animal);
         }
 
         // DELETE api/<AutlanticoController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            AutlanticoService autlanticoService = new AutlanticoService();
+
+            autlanticoService.DeleteAnimal(id);
         }
     }
 }

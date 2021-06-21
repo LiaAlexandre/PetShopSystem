@@ -20,9 +20,7 @@ namespace IA.Autlantico.Repository
 
                 string query = @"SELECT [Id]
                                        ,[Status]
-                                       ,[DeletedAt]
-                                  FROM [dbo].[tbHosting]
-                                  WHERE [DeletedAt] IS NULL";
+                                  FROM [dbo].[tbHosting]";
 
                 using (var connection = new SqlConnection(connectionstring))
                 {
@@ -47,9 +45,8 @@ namespace IA.Autlantico.Repository
 
                 string query = @"SELECT [Id]
                                        ,[Status]
-                                       ,[DeletedAt]
                                   FROM [dbo].[tbHosting]
-                                  WHERE [Id] = @Id AND [DeletedAt] IS NULL";
+                                  WHERE [Id] = @Id";
 
                 using (var connection = new SqlConnection(connectionstring))
                 {
