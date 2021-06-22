@@ -21,3 +21,5 @@ CREATE TABLE tbAnimal(
 	FOREIGN KEY (IdTutor) REFERENCES tbTutor (Id),
 	FOREIGN KEY (IdHosting) REFERENCES tbHosting (Id)	
 );
+
+INSERT INTO tbHosting ([Status]) VALUES (0)

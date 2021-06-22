@@ -19,18 +19,25 @@ namespace IA.Autlantico.Service
                 //busca um alojamento vazio
                 var emptyHosting = HostingRepository.GetEmpty();
 
-                //atualiza o alojamento para ocupado
-                HostingRepository.Update(emptyHosting.Id, true);
+                if(emptyHosting != null)
+                {
+                    //atualiza o alojamento para ocupado
+                    HostingRepository.Update(emptyHosting.Id, true);
 
-                //salva novo tutor
-                Tutor tutor = new Tutor(animal.NameTutor, animal.Address, animal.PhoneNumber);
-                int idTutor = TutorRepository.Save(tutor);
+                    //salva novo tutor
+                    Tutor tutor = new Tutor(animal.NameTutor, animal.Address, animal.PhoneNumber);
+                    int idTutor = TutorRepository.Save(tutor);
 
-                animal.IdTutor = idTutor;
-                animal.IdHosting = emptyHosting.Id;
+                    animal.IdTutor = idTutor;
+                    animal.IdHosting = emptyHosting.Id;
 
-                //salva novo animal
-                int idAnimal = AnimalRepository.Save(animal);
+                    //salva novo animal
+                    int idAnimal = AnimalRepository.Save(animal);
+                }
+                else
+                {
+                    throw new Exception("Não existem alojamentos vazios.");
+                }
 
                 scope.Complete();
 
