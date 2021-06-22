@@ -9,14 +9,16 @@ import { HttpClientModule } from '@angular/common/http';
 import { GetAnimalsComponent } from './getAnimals/getAnimals.component';
 import { IndexComponent } from './index/index.component';
 import { GetHostingComponent } from './getHosting/getHosting.component';
+import { EditAnimalComponent } from './editAnimal/editAnimal.component';
 
 @NgModule({
-  declarations: [		
+  declarations: [	
     AppComponent,
     SaveAnimalComponent,
       GetAnimalsComponent,
       IndexComponent,
-      GetHostingComponent
+      GetHostingComponent,
+      EditAnimalComponent
    ],
   imports: [
     BrowserModule,
@@ -28,3 +30,4 @@ import { GetHostingComponent } from './getHosting/getHosting.component';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+

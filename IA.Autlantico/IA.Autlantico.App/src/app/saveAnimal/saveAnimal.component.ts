@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { AnimalService } from './../../services/animal.service';
 import { Component, OnInit } from '@angular/core';
 import { Animal } from 'src/models/animal.model';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-saveAnimal',
@@ -11,11 +12,12 @@ import { Animal } from 'src/models/animal.model';
 
 export class SaveAnimalComponent implements OnInit {
 
-  constructor(private service: AnimalService) {
+  constructor(private service: AnimalService, private router: Router) {
 
   }
 
   ngOnInit(){
+    this.cleanfields();
   }
 
   title = 'SaveAnimal';
@@ -31,17 +33,29 @@ export class SaveAnimalComponent implements OnInit {
 
     const animalToSave:Animal =
         {
-            Name : this.namePet,
-            InternationMotive : this.internationMotive,
-            Status : parseInt(this.status),
-            NameTutor : this.nameTutor,
-            Address : this.address,
-            PhoneNumber : this.phoneNumber,
-            StatusName : this.statusName
+            name : this.namePet,
+            internationMotive : this.internationMotive,
+            status : parseInt(this.status),
+            nameTutor : this.nameTutor,
+            address : this.address,
+            phoneNumber : this.phoneNumber,
+            statusName : this.statusName
            };
 
     this.service.save(animalToSave).subscribe(result => {
-      console.log(result);
+      this.router.navigate(['/getAnimals']);
     });
+
+    this.cleanfields();
+  }
+
+  cleanfields()
+  {
+    this.namePet = '';
+    this.internationMotive= '';
+    this.status = '0';
+    this.nameTutor = '';
+    this.address ='';
+    this.phoneNumber = '';
   }
 }

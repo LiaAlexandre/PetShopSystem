@@ -51,16 +51,30 @@ namespace IA.Autlantico.Service
 
         public Animal GetAnimalById(int id)
         {
-            return AnimalRepository.GetById(id);
+            var animal = AnimalRepository.GetById(id);
+
+            var tutor = TutorRepository.GetById(animal.IdTutor.Value);
+
+            animal.NameTutor = tutor.Name;
+            animal.Address = tutor.Address;
+            animal.PhoneNumber = tutor.PhoneNumber;
+
+            return animal;
         }
 
         public void UpdateAnimal(Animal animal)
         {
-            //atualiza informações do tutor
-            Tutor tutor = new Tutor(animal.NameTutor, animal.Address, animal.PhoneNumber);
+
+            var animalInDb = AnimalRepository.GetById(animal.Id.Value);
+
+            var tutor = TutorRepository.GetById(animalInDb.IdTutor.Value);
+
+            tutor.Name = animal.NameTutor;
+            tutor.PhoneNumber = animal.PhoneNumber;
+            tutor.Address = animal.Address;
+
             TutorRepository.Update(tutor);
 
-            //atualiza informações do animal
             AnimalRepository.Update(animal);
         }
 

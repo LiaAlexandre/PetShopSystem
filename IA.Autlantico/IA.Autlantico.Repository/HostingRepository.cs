@@ -72,7 +72,7 @@ namespace IA.Autlantico.Repository
             {
                 Hosting hosting = null;
 
-                string query = @"SELECT [Id]
+                string query = @"SELECT TOP 1 [Id]
                                        ,[Status]
                                   FROM [dbo].[tbHosting]
                                   WHERE [Status] = 0";
@@ -81,7 +81,7 @@ namespace IA.Autlantico.Repository
                 {
                     connection.Open();
 
-                    hosting = connection.QuerySingleOrDefault<Hosting>(query);
+                    hosting = connection.QuerySingle<Hosting>(query);
                 }
 
                 return hosting;

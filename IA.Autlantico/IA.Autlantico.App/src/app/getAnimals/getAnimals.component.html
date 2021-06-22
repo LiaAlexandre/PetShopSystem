@@ -17,7 +17,6 @@
         <thead class="tabela__cabecalho">
           <tr>
             <th class="tabela__cabecalho__conteudo">Nome</th>
-            <th class="tabela__cabecalho__conteudo">Tutor</th>
             <th class="tabela__cabecalho__conteudo">Alojamento</th>
             <th class="tabela__cabecalho__conteudo">Status</th>
             <th class="tabela__cabecalho__conteudo"></th>
@@ -27,14 +26,12 @@
         <tbody>
           <tr *ngFor="let animal of animals" class="tabela__linha">
             <td class="tabela__conteudo">{{animal.name}}</td>
-            <td class="tabela__conteudo">{{animal.nameTutor}}</td>
             <td class="tabela__conteudo">{{animal.idHosting}}</td>
             <td class="tabela__conteudo">{{animal.statusName}}</td>
-            <td><button class="botao" type="submit" (click)="getByName()">Atualizar</button></td>
-            <td><button class="botao" type="submit" (click)="getByName()">Excluir</button></td>
+            <td><button class="botao" type="submit" (click)="editFile(animal.id)">Atualizar</button></td>
+            <td><button class="botao" type="submit" (click)="deleteAnimal(animal.id)">Excluir</button></td>
           </tr>
         </tbody>
       </table>
   </div>
-
 </section>

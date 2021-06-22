@@ -6,11 +6,11 @@ namespace IA.Autlantico.Entity
 {
     public class Tutor
     {
-        public Tutor(int id, string Name, string Adress, string PhoneNumber, DateTime DeletedAt)
+        public Tutor(int Id, string Name, string Address, string PhoneNumber, DateTime? DeletedAt)
         {
             this.Id = Id;
             this.Name = Name;
-            this.Address = Adress;
+            this.Address = Address;
             this.PhoneNumber = PhoneNumber;
             this.DeletedAt = DeletedAt;
         }
@@ -26,7 +26,7 @@ namespace IA.Autlantico.Entity
         public string Name { get; set; }
         public string Address { get; set; }
         public string PhoneNumber { get; set; }
-        public DateTime DeletedAt { get; set; }
+        public DateTime? DeletedAt { get; set; }
 
     }
 }

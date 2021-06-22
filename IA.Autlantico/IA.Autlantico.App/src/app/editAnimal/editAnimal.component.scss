@@ -47,7 +47,7 @@
 
   &__titulo
   {
-    color:black;
+    color:gray;
   }
 }
 
@@ -56,8 +56,8 @@
 }
 
 .botao {
-  background-color: black;
-  color: white !important;
+  background-color: var(--primary);
+  color: white;
   display: block;
   flex: 1;
   border: none;
@@ -76,17 +76,4 @@
     background-color: gray;
     color: black !important;
   }
-}
-
-.titulo {
-  text-align: center;
-  font-size: 24px;
-  margin-bottom: 16px;
-}
-
-.tabela {
-  text-align: center;
-  margin: 0 auto;
-  background-color: white;
-  width: 600px;
 }

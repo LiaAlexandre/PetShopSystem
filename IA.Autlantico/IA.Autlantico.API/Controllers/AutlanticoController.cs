@@ -39,6 +39,19 @@ namespace IA.Autlantico.API.Controllers
             return getAnimal;
         }
 
+        // GET api/<AutlanticoController>/5
+        [EnableCors("MyPolicy")]
+        [Route("GetAnimal/{id}")]
+        [HttpGet]
+        public Animal GetAnimal(int id)
+        {
+            AutlanticoService autlanticoService = new AutlanticoService();
+
+             var getAnimal = autlanticoService.GetAnimalById(id);
+
+            return getAnimal;
+        }
+
         // POST api/<AutlanticoController>
         [EnableCors("MyPolicy")]
         [HttpPost]
@@ -64,8 +77,9 @@ namespace IA.Autlantico.API.Controllers
         }
 
         // PUT api/<AutlanticoController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Animal animal)
+        [EnableCors("MyPolicy")]
+        [HttpPut]
+        public void Put([FromBody] Animal animal)
         {
             AutlanticoService autlanticoService = new AutlanticoService();
 
@@ -73,6 +87,7 @@ namespace IA.Autlantico.API.Controllers
         }
 
         // DELETE api/<AutlanticoController>/5
+        [EnableCors("MyPolicy")]
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

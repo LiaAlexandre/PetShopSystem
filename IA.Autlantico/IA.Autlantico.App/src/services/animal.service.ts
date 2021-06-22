@@ -12,6 +12,7 @@ import {catchError, map} from 'rxjs/operators';
 export class AnimalService implements HttpInterceptor{
 
   private url: string = 'https://localhost:44382/api/autlantico';
+  private url2: string = 'https://localhost:44382/api/autlantico/GetHostings';
   private animalsList: any[];
 
 constructor(private httpClient: HttpClient) {
@@ -49,11 +50,36 @@ constructor(private httpClient: HttpClient) {
     }
 
     getAllHosting(): Observable<Hosting[]> {
-      return this.httpClient.get<Hosting[]>(this.url).pipe(
+      return this.httpClient.get<Hosting[]>(this.url2).pipe(
         catchError((error) => {
           console.log('error is intercept')
           console.error(error);
           return throwError(error.message);
         }))
+      }
+
+      deleteAnimal(animalId: number): Observable<any> {
+        const apiUrl = `${this.url}/${animalId}`;
+        return this.httpClient.delete<number>(apiUrl);
+      }
+
+      updateAnimal(animal: Animal): Observable<Animal> {
+        console.log(animal);
+        return this.httpClient.put<Animal>(this.url, animal).pipe(
+          catchError((error) => {
+            console.log('error is intercept')
+            console.error(error);
+            return throwError(error.message);
+          }))
+      }
+
+      getAnimal(animalId: number): Observable<Animal> {
+        console.log(animalId);
+        return this.httpClient.get<Animal>(this.url+'/GetAnimal/'+animalId).pipe(
+          catchError((error) => {
+            console.log('error is intercept')
+            console.error(error);
+            return throwError(error.message);
+          }))
       }
 }

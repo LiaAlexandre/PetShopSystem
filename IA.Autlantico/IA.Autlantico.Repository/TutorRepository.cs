@@ -19,7 +19,7 @@ namespace IA.Autlantico.Repository
 
                 string query = @"SELECT [Id]
                                        ,[Name]
-                                       ,[Adress]
+                                       ,[Address]
                                        ,[PhoneNumber]
                                        ,[DeletedAt]
                                   FROM [dbo].[tbTutor]
@@ -32,12 +32,12 @@ namespace IA.Autlantico.Repository
                     var parameters = new DynamicParameters();
                     parameters.Add("@Id", id);
 
-                    tutor = connection.QuerySingleOrDefault<Tutor>(query);
+                    tutor = connection.QuerySingleOrDefault<Tutor>(query, parameters);
                 }
 
                 return tutor;
             }
-            catch
+            catch (Exception ex)
             {
                 throw new Exception("Erro ao buscar informações de tutor.");
             }
@@ -67,7 +67,7 @@ namespace IA.Autlantico.Repository
                     parameters.Add("@Address", tutor.Address);
                     parameters.Add("@PhoneNumber", tutor.PhoneNumber);
 
-                    idTutor = connection.Execute(query, parameters);
+                    var idTutor2 = Convert.ToInt32(connection.ExecuteScalar(query, parameters));
                 }
 
                 return idTutor;
@@ -83,9 +83,9 @@ namespace IA.Autlantico.Repository
             try
             {
                 string query = @"UPDATE [dbo].[tbTutor]
-                                    SET [Name]
-                                       ,[Adress]
-                                       ,[PhoneNumber])
+                                    SET [Name] = @Name
+                                       ,[Address] = @Address
+                                       ,[PhoneNumber]
                                 WHERE Id = @Id";
 
                 using (var connection = new SqlConnection(connectionstring))
@@ -94,14 +94,14 @@ namespace IA.Autlantico.Repository
 
                     var parameters = new DynamicParameters();
                     parameters.Add("@Name", tutor.Name);
-                    parameters.Add("@Adress", tutor.Address);
+                    parameters.Add("@Address", tutor.Address);
                     parameters.Add("@PhoneNumber", tutor.PhoneNumber);
                     parameters.Add("@Id", tutor.Id);
 
                     connection.Execute(query, parameters);
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 throw new Exception("Erro ao editar tutor.");
             }
@@ -126,7 +126,7 @@ namespace IA.Autlantico.Repository
                     connection.Execute(query, parameters);
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 throw new Exception("Erro ao excluir tutor.");
             }

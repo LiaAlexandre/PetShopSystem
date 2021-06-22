@@ -93,12 +93,12 @@ namespace IA.Autlantico.Repository
                     var parameters = new DynamicParameters();
                     parameters.Add("@Id", id);
 
-                    animal = connection.QuerySingleOrDefault<Animal>(query);
+                    animal = connection.QuerySingleOrDefault<Animal>(query, parameters);
                 }
 
                 return animal;
             }
-            catch
+            catch(Exception ex)
             {
                 throw new Exception("Erro ao buscar animal.");
             }
@@ -134,11 +134,11 @@ namespace IA.Autlantico.Repository
                     parameters.Add("@IdTutor", animal.IdTutor);
                     parameters.Add("@IdHosting", animal.IdHosting);
 
-                    idAnimal = connection.Execute(query, parameters);
+                    idAnimal = Convert.ToInt32(connection.ExecuteScalar(query, parameters));
                 }
                 return idAnimal;
             }
-            catch
+            catch(Exception ex)
             {
                 throw new Exception("Erro ao salvar animal.");
             }            
@@ -152,7 +152,6 @@ namespace IA.Autlantico.Repository
                                     SET [Name] = @Name
                                         ,[InternationMotive] = @InternationMotive
                                         ,[Status] = @Status
-                                        ,[IdHosting] = @IdHosting
                                 WHERE Id = @Id";
 
                 using (var connection = new SqlConnection(connectionstring))
@@ -164,12 +163,11 @@ namespace IA.Autlantico.Repository
                     parameters.Add("@InternationMotive", animal.InternationMotive);
                     parameters.Add("@Status", animal.Status);
                     parameters.Add("@Id", animal.Id);
-                    parameters.Add("@IdHosting", animal.IdHosting);
 
                     connection.Execute(query, parameters);
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 throw new Exception("Erro ao editar animal.");
             }
@@ -181,7 +179,6 @@ namespace IA.Autlantico.Repository
             {
                 string query = @"UPDATE [dbo].[tbAnimal]
                                  SET [DeletedAt] = @DeletedAt
-                                    ,[IdHosting] = null
                                  WHERE Id = @Id";
 
                 using (var connection = new SqlConnection(connectionstring))
@@ -195,7 +192,7 @@ namespace IA.Autlantico.Repository
                     connection.Execute(query, parameters);
                 }
             }
-            catch
+            catch(Exception ex)
             {
                 throw new Exception("Erro ao excluir animal.");
             }

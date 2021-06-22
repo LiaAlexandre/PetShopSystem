@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Router } from '@angular/router';
 import { Animal } from 'src/models/animal.model';
 import { AnimalService } from 'src/services/animal.service';
 
@@ -11,7 +12,7 @@ export class GetAnimalsComponent implements OnInit {
 
   animals: any[];
 
-  constructor(private service: AnimalService) {
+  constructor(private service: AnimalService, private router: Router) {
     this.animals = [];
   }
 
@@ -29,5 +30,17 @@ export class GetAnimalsComponent implements OnInit {
       console.table(animals);
       this.animals = animals;
     })
+    }
+
+    deleteAnimal(idAnimal: number) {
+      this.service.deleteAnimal(idAnimal).subscribe(result => {
+        alert("Exclusão realizada com sucesso");
+        window.location.reload();
+      });
+    }
+
+    editFile(animalId: number)
+    {
+      this.router.navigate(['/editAnimal'], { queryParams: { id: animalId } });
     }
   }

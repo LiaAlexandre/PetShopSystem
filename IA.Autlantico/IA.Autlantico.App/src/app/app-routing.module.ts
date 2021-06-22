@@ -1,3 +1,4 @@
+import { EditAnimalComponent } from './editAnimal/editAnimal.component';
 import { GetHostingComponent } from './getHosting/getHosting.component';
 import { SaveAnimalComponent } from './saveAnimal/saveAnimal.component';
 import { RouterModule, Routes } from "@angular/router";
@@ -8,7 +9,9 @@ export const routes: Routes = [
   { path: '', redirectTo: 'getAnimals', pathMatch: 'full' },
   { path: 'saveAnimal', component: SaveAnimalComponent },
   { path: 'getAnimals', component: GetAnimalsComponent },
-  { path: 'getHosting', component: GetHostingComponent }
+  { path: 'getHosting', component: GetHostingComponent },
+  { path: 'editAnimal', component: EditAnimalComponent }
+
 
 ];
 

@@ -1,11 +1,11 @@
 export interface Animal {
-  Id?: number;
-  Name:string;
-  InternationMotive:string;
-  Status?:number;
-  StatusName?:string;
-  IdTutor?:number;
-  NameTutor:string;
-  Address: string;
-  PhoneNumber:string;
+  id?: number;
+  name:string;
+  internationMotive:string;
+  status?:number;
+  statusName?:string;
+  idTutor?:number;
+  nameTutor:string;
+  address: string;
+  phoneNumber:string;
 }
