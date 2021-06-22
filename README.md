@@ -18,6 +18,7 @@ A aplicação consiste em sistema de cadastro de animais para internação em um
 
 - Criar banco de dados com o nome de "Autlantico" 
 - Executar o arquivo de Migrations.sql na base de dados
+- Realizar INSERT na tbHosting para inserir os 10 registros de alojamentos.
 - Iniciar IA.Autlantico.API através do Visual Studio
 - Iniciar IA.Autlantico.App através do prompt de comando (ng s -o)
 
