@@ -11,6 +11,9 @@ namespace IA.Autlantico.Entity
             this.Id = Id;
             this.Status = Status;
         }
+
+        public Hosting() { }
+
         public int Id { get; set; }
         public bool Status { get; set; }
 

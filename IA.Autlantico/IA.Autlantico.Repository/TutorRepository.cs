@@ -67,7 +67,7 @@ namespace IA.Autlantico.Repository
                     parameters.Add("@Address", tutor.Address);
                     parameters.Add("@PhoneNumber", tutor.PhoneNumber);
 
-                    var idTutor2 = Convert.ToInt32(connection.ExecuteScalar(query, parameters));
+                     idTutor = Convert.ToInt32(connection.ExecuteScalar(query, parameters));
                 }
 
                 return idTutor;
@@ -85,7 +85,7 @@ namespace IA.Autlantico.Repository
                 string query = @"UPDATE [dbo].[tbTutor]
                                     SET [Name] = @Name
                                        ,[Address] = @Address
-                                       ,[PhoneNumber]
+                                       ,[PhoneNumber] = @PhoneNumber
                                 WHERE Id = @Id";
 
                 using (var connection = new SqlConnection(connectionstring))

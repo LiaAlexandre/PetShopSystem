@@ -19,7 +19,7 @@ namespace IA.Autlantico.Entity
 
                 if (Status == StatusId.Recovering) return "Se recuperando";
 
-                return "Curado";
+                return "Recuperado";
             }
         }
         public int? IdTutor { get; set; }

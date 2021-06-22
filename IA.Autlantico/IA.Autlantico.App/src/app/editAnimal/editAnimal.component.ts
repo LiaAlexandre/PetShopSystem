@@ -35,6 +35,7 @@ export class EditAnimalComponent implements OnInit {
           this.nameTutor = result.nameTutor;
           this.phoneNumber = result.phoneNumber;
           this.address = result.address;
+          this.status =  String(result.status);
           this.internationMotive = result.internationMotive;
         });
       }

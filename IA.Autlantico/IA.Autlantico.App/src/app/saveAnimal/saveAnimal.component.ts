@@ -43,6 +43,7 @@ export class SaveAnimalComponent implements OnInit {
            };
 
     this.service.save(animalToSave).subscribe(result => {
+      alert("Animal cadastrado. Número do alojamento: " + result)
       this.router.navigate(['/getAnimals']);
     });
 
